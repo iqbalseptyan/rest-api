@@ -13,23 +13,26 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.get("/:productId", (req, res, next) => {
-  const id = req.params.productId;
-
-  if (id === "special") {
-    res.status(200).json({
-      message: "You discovered the special ID",
-      id: id,
+router.get("/:productId", async (req, res, next) => {
+  await Product.findAll({
+    where: {
+      id: req.params.productId,
+    },
+  })
+    .then((data) => {
+      res.status(201).json({
+        message: "You passed an ID",
+        id: data,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err,
+      });
     });
-  } else {
-    res.status(200).json({
-      message: "You passed an ID",
-    });
-  }
 });
 
 router.post("/", async (req, res, next) => {
-  // console.log(req.body);
   const product = {
     name: req.body.name,
     price: req.body.price,
@@ -80,7 +83,7 @@ router.delete("/:productId", async (req, res, next) => {
       id: req.params.productId,
     },
   })
-    .then((data) => {
+    .then(() => {
       res.status(201).json({
         message: "Handling DELETE requests to /products Success",
       });
