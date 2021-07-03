@@ -1,7 +1,16 @@
 const http = require("http");
 const app = require("./app");
+const db = require("./api/config/config");
 
-const port = process.env.PORT || 3003;
+db.authenticate()
+  .then(() => {
+    console.log("Database connected");
+  })
+  .catch((err) => {
+    console.log("Error: " + err);
+  });
+
+const port = process.env.PORT || 3000;
 
 const server = http.createServer(app);
 
