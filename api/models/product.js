@@ -5,9 +5,9 @@ const Product = db.define(
   "product",
   {
     id: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV1,
       primaryKey: true,
-      autoIncrement: true,
     },
     name: {
       type: Sequelize.STRING,
@@ -15,8 +15,12 @@ const Product = db.define(
     price: {
       type: Sequelize.STRING,
     },
+    productImage: {
+      type: Sequelize.STRING,
+    },
   },
   {
+    underscored: true,
     freezeTableName: true,
     timestamps: false,
   }
