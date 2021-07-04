@@ -1,4 +1,3 @@
-const http = require("http");
 const app = require("./app");
 const db = require("./api/config/config");
 
@@ -10,10 +9,8 @@ db.authenticate()
     console.log("Error: " + err);
   });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
-const server = http.createServer(app);
-
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`server running on port ${port}`);
 });
